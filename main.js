@@ -109,11 +109,18 @@ container.innerHTML = data.map((card) => {
 }).join('');
 
 
+let currentAudio = null;
+
 document.querySelectorAll('.card').forEach((card, idx) => {
     card.addEventListener('click', (e) => {
-         e.preventDefault();
-        const audio = new Audio(data[idx].url);
-        audio.play();
+        e.preventDefault();
+
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+
+        currentAudio = new Audio(data[idx].url);
+        currentAudio.play();
     });
 });
-
