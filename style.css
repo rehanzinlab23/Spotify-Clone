@@ -1015,6 +1015,54 @@ a {
   font-weight: 400;
 }
 
+/* PlayBar */
+
+.playbar-container {
+  background-color: #000;
+  height: 100px;
+  position: fixed;
+  width: 100%;
+  top: 90%;
+  margin: 8px;
+  padding: 8px;
+}
+
+.playbar-aside {
+  opacity: 1;
+  transition: opacity .3s ease-in;
+  display: flex;
+  min-width: 620px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  height: auto;
+  user-select: none;
+}
+
+.playbar-main {
+  height: 72px;
+  -webkit-box-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-box-pack: justify;
+}
+
+.playbar-left {
+  container-name: now-playing-bar-left-container;
+  container-type: inline-size;
+  min-width: 180px;
+  padding-inline-start: 8px;
+  width: 30%;
+}
+
+.playbar-left-content {
+  display: flex;
+}
+
 /* Responsive Design */
 
 @media (max-width: 1280px) {
