@@ -1542,10 +1542,10 @@ a {
     padding: 0 8px;
   }
 
-  .playbar-left,
   .playbar-right {
     width: 25%;
     min-width: 120px;
+    display: none;
   }
 
   .track-info {
