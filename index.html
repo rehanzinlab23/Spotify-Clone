@@ -528,19 +528,72 @@
             </footer>
         </div>
 
-        <!-- PalyBar -->
+        <!-- PlayBar -->
 
-        <div class="playbar-container">
-            <aside class="playbar-aside">
-                <div class="playbar-main">
-                    <div class="playbar-left">
-                        <div class="playbar-left-content">
+        <div class="playbar">
 
-                        </div>
+            <!-- Track info -->
+
+            <div class="playbar-left">
+                <div class="album-cover"><img width="56px" height="56px" src="Images/shahiba.jpeg" alt="shahiba"></div>
+                <div class="track-info">
+                    <div class="track-name">Sahiba</div>
+                    <div class="artist-name">Aditya Rikhari</div>
+                </div>
+            </div>
+
+            <!-- Playbar Center -->
+
+            <div class="playbar-center">
+                <div class="player-controls">
+                    <button class="control-button small">
+                        <span class="icon-shuffle"></span>
+                    </button>
+                    <button class="control-button">
+                        <span id="previous" class="icon-prev"></span>
+                    </button>
+                    <button class="control-button play-button">
+                        <span id="play" class="icon-play"></span>
+                    </button>
+                    <button class="control-button">
+                        <span id="next" class="icon-next"></span>
+                    </button>
+                </div>
+
+                <!-- Progress Container -->
+
+                <div class="progress-container">
+                    <span class="time"></span>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <span class="time"></span>
+                </div>
+            </div>
+
+            <!-- Volume and additional controls -->
+
+            <div class="playbar-right">
+                <button class="control-button small">
+                    <span class="icon-queue"></span>
+                </button>
+                <button class="control-button small">
+                    <span class="icon-devices"></span>
+                </button>
+                <div class="volume-container">
+                    <button class="control-button small">
+                        <span class="icon-volume"></span>
+                    </button>
+                    <div class="volume-bar">
+                        <div class="volume-fill"></div>
                     </div>
                 </div>
-            </aside>
+                <button class="control-button small">
+                    <span class="icon-fullscreen"></span>
+                </button>
+            </div>
         </div>
+
 
     </div>
     <script src="main.js"></script>

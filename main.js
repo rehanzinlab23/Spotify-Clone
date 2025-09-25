@@ -1,33 +1,4 @@
-// const main = async (token)=> {
-// let a =  await fetch("https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n/tracks",{
-//   method: "GET", 
-//   headers: {
-//     "Content-Type": "application/json",
-//     "Authorization": `Bearer ${token}` 
-//   }
-// });
-
-// let response = await a.json();
-
-// async function getTopTracks(){
-//   // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
-//   return (await fetchWebApi(
-//     'v1/me/top/tracks?time_range=long_term&limit=5', 'GET'
-//   )).items;
-// }
-
-//   const topTracks = await getTopTracks();
-//   console.log(
-//     topTracks?.map(
-//       ({name, artists}) =>
-//         `${name} by ${artists.map(artist => artist.name).join(', ')}`
-//     )
-//   );
-// }
-
-// const token = 'BQDzdEep-HP1M8KsRZglrNt5Urf78RyV4cV2vqJY1baNwGKoyUntX0GU0GdYVhIw3-OCUNG014gBrGLBO7iKsnas0Kpg39mKwQXhRFC5Kak9bo1L2CNqAFEWRb0_iZ5AlWwuSdgZ_790i1vukVkm-TsaSusGiWCPUgS1ekv0yBAK_QY2PHUc9Za6mGb8OX7IOJ__WNYDufV4O1uxzmNH_XLitWJkSAf4v9N8RRLaOPiCSrei693gAXRZLzTx_t2xejk258DBaHJEBO0sd5_8TIFRq0rYCvgQb4wbojt2Wep-BD_YIb_W4V2CmlRcqf-d';
-
-// main(token);
+// Data
 
 const data = [
     {
@@ -40,6 +11,7 @@ const data = [
         "cover_image": "https://i.scdn.co/image/ab67616d00001e020a47bbe7141fdfe0eb2cdba7",
         "url": './songs/shahiba.mp3.mp3'
     },
+
     {
         "id": "s2",
         "title": "Pal Pal",
@@ -50,6 +22,7 @@ const data = [
         "cover_image": "https://i.scdn.co/image/ab67616d00001e0285c5968be0d0d9c545241124",
         "url": './songs/palpal.mp3.mp3'
     },
+
     {
         "id": "s3",
         "title": "High On You",
@@ -60,6 +33,7 @@ const data = [
         "cover_image": "https://i.scdn.co/image/ab67616d00001e02aa37058328313bebc50d17d2",
         "url": './songs/highonyou.mp3.mp3'
     },
+
     {
         "id": "s4",
         "title": "Jhol",
@@ -70,6 +44,7 @@ const data = [
         "cover_image": "https://i.scdn.co/image/ab67616d00001e021344800458a38197bfc721f3",
         "url": './songs/jhol.mp3.mp3'
     },
+
     {
         "id": "s5",
         "title": "Afsos",
@@ -80,6 +55,7 @@ const data = [
         "cover_image": "https://i.scdn.co/image/ab67616d00001e028537cf974af2c408bdd8e1a6",
         "url": './songs/afsos.mp3.mp3'
     },
+
     {
         "id": "s6",
         "title": "At Peace",
@@ -92,10 +68,11 @@ const data = [
     }
 ]
 
+// Collecting Data 
+
 const container = document.querySelector('.wrap')
 container.innerHTML = data.map((card) => {
     return `
-    
         <div class="card">
             <img src="${card.cover_image}" alt="${card.id}">
             <h3>${card.title}</h3>
@@ -104,23 +81,146 @@ container.innerHTML = data.map((card) => {
                 <i class="fa-solid fa-play" style="color: #000000;"></i>
             </div>
         </div>
- 
-    `;
+    `
 }).join('');
 
+// Card Elements
 
-let currentAudio = null;
+const cards = document.querySelectorAll(".card");
+const audio = new Audio(); 
+let currentSongIndex = 0;
+let isPlaying = false;
 
-document.querySelectorAll('.card').forEach((card, idx) => {
-    card.addEventListener('click', (e) => {
-        e.preventDefault();
+// Playbar elements
 
-        if (currentAudio) {
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-        }
+const trackName = document.querySelector(".track-name");
+const artistName = document.querySelector(".artist-name");
+const albumCover = document.querySelector(".album-cover img");
 
-        currentAudio = new Audio(data[idx].url);
-        currentAudio.play();
-    });
+const playBtn = document.querySelector(".play-button #play");
+const prevBtn = document.getElementById("previous");
+const nextBtn = document.getElementById("next");
+
+// Progress bar
+
+const progressBar = document.querySelector(".progress-bar");
+const progressFill = document.querySelector(".progress-fill");
+const currentTimeEl = document.querySelectorAll(".time")[0];
+const durationEl = document.querySelectorAll(".time")[1];
+
+// Volume bar
+
+const volumeBar = document.querySelector(".volume-bar");
+const volumeFill = document.querySelector(".volume-fill");
+
+// Load song into playbar
+
+function loadSong(index) {
+  const song = data[index];
+  currentSongIndex = index;
+
+  trackName.textContent = song.title;
+  artistName.textContent = song.artist;
+  albumCover.src = song.cover_image;
+  audio.src = song.url;
+}
+
+// Play song
+
+function playSong() {
+  audio.play();
+  isPlaying = true;
+  playBtn.className = "icon-pause";
+}
+
+// Pause song
+
+function pauseSong() {
+  audio.pause();
+  isPlaying = false;
+  playBtn.className = "icon-play";
+}
+
+// Next song
+
+function nextSong() {
+  currentSongIndex = (currentSongIndex + 1) % data.length;
+  loadSong(currentSongIndex);
+  playSong();
+}
+
+// Previous song
+
+function prevSong() {
+  currentSongIndex = (currentSongIndex - 1 + data.length) % data.length;
+  loadSong(currentSongIndex);
+  playSong();
+}
+
+// Card click → load and play
+
+cards.forEach((card, idx) => {
+  card.addEventListener("click", () => {
+    loadSong(idx);
+    playSong();
+  });
+});
+
+// Play / Pause
+
+playBtn.addEventListener("click", () => {
+  isPlaying ? pauseSong() : playSong();
+});
+
+// Next / Previous
+
+nextBtn.addEventListener("click", nextSong);
+prevBtn.addEventListener("click", prevSong);
+
+// Progress update
+
+audio.addEventListener("timeupdate", () => {
+  const { currentTime, duration } = audio;
+
+  // Progress bar
+
+  const progressPercent = (currentTime / duration) * 100;
+  progressFill.style.width = `${progressPercent}%`;
+
+  // Current time
+
+  let min = Math.floor(currentTime / 60);
+  let sec = Math.floor(currentTime % 60);
+  if (sec < 10) sec = "0" + sec;
+  currentTimeEl.textContent = `${min}:${sec}`;
+
+  // Duration
+
+  if (!isNaN(duration)) {
+    let dmin = Math.floor(duration / 60);
+    let dsec = Math.floor(duration % 60);
+    if (dsec < 10) dsec = "0" + dsec;
+    durationEl.textContent = `${dmin}:${dsec}`;
+  }
+});
+
+// Seek
+
+progressBar.addEventListener("click", (e) => {
+  const barWidth = progressBar.offsetWidth;
+  const clickX = e.offsetX;
+  const newTime = (clickX / barWidth) * audio.duration;
+
+  audio.currentTime = newTime;
+});
+
+// Volume control
+
+volumeBar.addEventListener("click", (e) => {
+  const barWidth = volumeBar.offsetWidth;
+  const clickX = e.offsetX;
+  const newVolume = clickX / barWidth;
+
+  audio.volume = newVolume;
+  volumeFill.style.width = `${newVolume * 100}%`;
 });
